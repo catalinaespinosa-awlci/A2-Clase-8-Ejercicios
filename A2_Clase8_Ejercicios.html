@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Español Médico A2 · Clase 8 — Ejercicios</title>
+<style>
+  :root{
+    --mostaza:#F7EED9;
+    --mostaza-2:#F1E4C6;
+    --grafito:#36454F;
+    --grafito-2:#4A5A64;
+    --ambar:#E8A33D;
+    --ambar-osc:#C9832A;
+    --papel:#FCFAF4;
+    --verde:#4F7A57;
+    --verde-bg:#E4EFE2;
+    --rojo:#B4553F;
+    --rojo-bg:#F5E3DC;
+    --linea:#D8CBA9;
+    --sombra:0 2px 4px rgba(54,69,79,.08),0 8px 24px rgba(54,69,79,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:Calibri,"Segoe UI",system-ui,sans-serif;
+    background:var(--mostaza);
+    color:var(--grafito);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4,.serif{font-family:Cambria,Georgia,"Times New Roman",serif}
+
+  /* ---------- Cabecera ---------- */
+  header.top{
+    background:var(--grafito);
+    color:var(--mostaza);
+    padding:34px 24px 30px;
+    border-bottom:5px solid var(--ambar);
+  }
+  .top-inner{max-width:1000px;margin:0 auto}
+  .eyebrow{
+    font-family:Cambria,serif;font-style:italic;letter-spacing:.04em;
+    color:var(--ambar);font-size:.98rem;margin-bottom:4px
+  }
+  header.top h1{font-size:2.15rem;line-height:1.15;font-weight:700}
+  header.top p.sub{margin-top:8px;color:#D9DDE0;max-width:60ch;font-size:1.02rem}
+
+  /* ---------- Navegación entre módulos ---------- */
+  nav.tabs{
+    position:sticky;top:0;z-index:20;
+    background:var(--mostaza-2);
+    border-bottom:1px solid var(--linea);
+    box-shadow:0 2px 8px rgba(54,69,79,.06);
+  }
+  .tabs-inner{
+    max-width:1000px;margin:0 auto;display:flex;flex-wrap:wrap;gap:2px;padding:0 12px;
+  }
+  .tab-btn{
+    font-family:Cambria,serif;font-size:1rem;
+    background:transparent;border:none;cursor:pointer;
+    color:var(--grafito-2);padding:14px 18px;position:relative;
+    border-bottom:3px solid transparent;transition:.15s;
+  }
+  .tab-btn .num{
+    font-size:.78rem;color:var(--ambar-osc);font-weight:700;
+    display:block;letter-spacing:.06em
+  }
+  .tab-btn:hover{color:var(--grafito)}
+  .tab-btn.active{color:var(--grafito);border-bottom-color:var(--ambar);font-weight:700}
+  .tab-btn:focus-visible{outline:2px solid var(--ambar);outline-offset:-2px;border-radius:4px}
+
+  /* ---------- Contenedor ---------- */
+  main{max-width:1000px;margin:0 auto;padding:28px 20px 80px}
+  .module{display:none;animation:fade .3s ease}
+  .module.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .mod-head{
+    display:flex;align-items:flex-start;gap:16px;
+    padding:20px 22px;background:var(--grafito);color:var(--mostaza);
+    border-radius:12px;margin-bottom:8px;box-shadow:var(--sombra)
+  }
+  .mod-head .badge{
+    flex:none;width:52px;height:52px;border-radius:50%;
+    background:var(--ambar);color:var(--grafito);
+    font-family:Cambria,serif;font-weight:700;font-size:1.5rem;
+    display:grid;place-items:center
+  }
+  .mod-head h2{font-size:1.5rem;line-height:1.2}
+  .mod-head p{color:#D9DDE0;font-size:.95rem;margin-top:2px}
+
+  /* Barra de progreso por módulo */
+  .scorebar{
+    position:sticky;top:52px;z-index:15;
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    background:var(--papel);border:1px solid var(--linea);
+    border-radius:10px;padding:12px 18px;margin:14px 0 26px;
+    box-shadow:var(--sombra)
+  }
+  .scorebar .lbl{font-family:Cambria,serif;font-weight:700;font-size:1rem}
+  .track{flex:1;min-width:160px;height:10px;background:var(--mostaza-2);border-radius:99px;overflow:hidden}
+  .track > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ambar),var(--ambar-osc));transition:width .4s}
+  .scoretxt{font-variant-numeric:tabular-nums;font-weight:700;color:var(--grafito-2)}
+  .btn-reset{
+    font-family:Calibri,sans-serif;font-size:.85rem;cursor:pointer;
+    background:transparent;border:1px solid var(--linea);color:var(--grafito-2);
+    padding:6px 12px;border-radius:8px;transition:.15s
+  }
+  .btn-reset:hover{background:var(--mostaza-2);border-color:var(--grafito-2)}
+
+  /* ---------- Tarjeta de ejercicio ---------- */
+  .ex{
+    background:var(--papel);border:1px solid var(--linea);
+    border-radius:12px;padding:22px 24px;margin-bottom:20px;
+    box-shadow:var(--sombra);position:relative;overflow:hidden
+  }
+  .ex::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--ambar)}
+  .ex-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+  .ex-num{
+    font-family:Cambria,serif;font-weight:700;color:var(--ambar-osc);
+    font-size:1.05rem;flex:none
+  }
+  .ex-type{
+    font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--grafito-2);background:var(--mostaza-2);
+    padding:3px 9px;border-radius:99px;flex:none;align-self:center
+  }
+  .ex-q{font-size:1.08rem;margin-bottom:14px;font-weight:600}
+  .ex-q .foco{color:var(--ambar-osc);font-style:italic}
+  .instr{font-size:.9rem;color:var(--grafito-2);font-style:italic;margin-bottom:12px}
+
+  /* Opciones (radio / check) */
+  .opts{display:flex;flex-direction:column;gap:9px}
+  .opt{
+    display:flex;align-items:flex-start;gap:11px;
+    padding:11px 14px;border:1.5px solid var(--linea);border-radius:9px;
+    cursor:pointer;transition:.13s;background:#fff
+  }
+  .opt:hover{border-color:var(--ambar);background:var(--mostaza)}
+  .opt input{margin-top:4px;accent-color:var(--ambar-osc);flex:none}
+  .opt.correct{border-color:var(--verde);background:var(--verde-bg)}
+  .opt.wrong{border-color:var(--rojo);background:var(--rojo-bg)}
+  .opt.locked{cursor:default;opacity:.9}
+  .opt .mark{margin-left:auto;font-weight:700;font-family:Cambria,serif}
+  .opt.correct .mark{color:var(--verde)}
+  .opt.wrong .mark{color:var(--rojo)}
+
+  /* Inputs de texto */
+  .txtline{display:flex;flex-wrap:wrap;align-items:center;gap:8px;line-height:2.4}
+  input.blank{
+    font-family:Calibri,sans-serif;font-size:1rem;
+    border:none;border-bottom:2px solid var(--grafito-2);
+    background:var(--mostaza);padding:4px 10px;min-width:120px;
+    border-radius:6px 6px 0 0;color:var(--grafito)
+  }
+  input.blank:focus{outline:none;border-bottom-color:var(--ambar-osc);background:#fff}
+  input.blank.ok{border-bottom-color:var(--verde);background:var(--verde-bg)}
+  input.blank.no{border-bottom-color:var(--rojo);background:var(--rojo-bg)}
+
+  /* Banco de palabras */
+  .bank{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;padding:12px;background:var(--mostaza-2);border-radius:9px}
+  .chip{
+    font-size:.9rem;background:#fff;border:1px solid var(--linea);
+    padding:5px 12px;border-radius:99px;color:var(--grafito-2);font-style:italic
+  }
+
+  /* Emparejar */
+  .match{display:grid;grid-template-columns:1fr auto;gap:10px 14px;align-items:center}
+  .match .term{font-weight:600}
+  select.msel{
+    font-family:Calibri,sans-serif;font-size:.95rem;padding:8px 10px;
+    border:1.5px solid var(--linea);border-radius:8px;background:#fff;
+    color:var(--grafito);min-width:200px;cursor:pointer
+  }
+  select.msel:focus{outline:none;border-color:var(--ambar-osc)}
+  select.msel.ok{border-color:var(--verde);background:var(--verde-bg)}
+  select.msel.no{border-color:var(--rojo);background:var(--rojo-bg)}
+
+  /* Ordenar */
+  .order{display:flex;flex-direction:column;gap:8px}
+  .order-item{
+    display:flex;align-items:center;gap:12px;background:#fff;
+    border:1.5px solid var(--linea);border-radius:9px;padding:10px 14px;cursor:grab
+  }
+  .order-item.dragging{opacity:.4}
+  .order-item .grip{color:var(--ambar-osc);font-size:1.2rem;flex:none}
+  .order-item.ok{border-color:var(--verde);background:var(--verde-bg)}
+  .order-item.no{border-color:var(--rojo);background:var(--rojo-bg)}
+
+  /* Clasificar */
+  .cats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  @media(max-width:640px){.cats{grid-template-columns:1fr}}
+  .cat-col{background:var(--mostaza-2);border:1.5px dashed var(--linea);border-radius:10px;padding:12px;min-height:90px}
+  .cat-col h4{font-size:.95rem;color:var(--grafito);margin-bottom:8px;text-align:center}
+  .cat-col.over{border-color:var(--ambar-osc);background:var(--mostaza)}
+  .token-pool{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .token{
+    font-size:.92rem;background:#fff;border:1.5px solid var(--linea);
+    padding:7px 13px;border-radius:8px;cursor:grab;transition:.12s
+  }
+  .token:hover{border-color:var(--ambar)}
+  .token.ok{border-color:var(--verde);background:var(--verde-bg)}
+  .token.no{border-color:var(--rojo);background:var(--rojo-bg)}
+
+  /* Abierta */
+  textarea.open{
+    width:100%;font-family:Calibri,sans-serif;font-size:1rem;color:var(--grafito);
+    border:1.5px solid var(--linea);border-radius:9px;padding:12px;background:#fff;
+    min-height:96px;resize:vertical;line-height:1.55
+  }
+  textarea.open:focus{outline:none;border-color:var(--ambar-osc)}
+
+  /* Botón comprobar + feedback */
+  .ex-foot{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:16px}
+  .btn-check{
+    font-family:Cambria,serif;font-size:.98rem;cursor:pointer;
+    background:var(--grafito);color:var(--mostaza);border:none;
+    padding:9px 22px;border-radius:8px;transition:.15s;font-weight:600
+  }
+  .btn-check:hover{background:var(--grafito-2)}
+  .btn-check:disabled{opacity:.45;cursor:default}
+  .btn-ghost{
+    font-family:Calibri,sans-serif;font-size:.85rem;cursor:pointer;background:transparent;
+    border:1px solid var(--linea);color:var(--grafito-2);padding:8px 14px;border-radius:8px
+  }
+  .btn-ghost:hover{background:var(--mostaza-2)}
+  .fb{font-size:.95rem;padding:0;max-height:0;overflow:hidden;transition:.25s;width:100%}
+  .fb.show{max-height:400px;padding:12px 14px;margin-top:6px;border-radius:9px}
+  .fb.good{background:var(--verde-bg);border-left:4px solid var(--verde);color:#365b3d}
+  .fb.bad{background:var(--rojo-bg);border-left:4px solid var(--rojo);color:#7a3524}
+  .fb.info{background:var(--mostaza-2);border-left:4px solid var(--ambar-osc);color:var(--grafito)}
+  .fb strong{font-family:Cambria,serif}
+  .modelo{margin-top:8px;font-size:.92rem}
+  .modelo b{color:var(--ambar-osc)}
+
+  /* Ficha del paciente */
+  .ficha{
+    background:var(--mostaza-2);border:1px solid var(--linea);border-radius:11px;
+    padding:16px 20px;margin-bottom:24px
+  }
+  .ficha h3{font-size:1.05rem;color:var(--grafito);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .ficha h3::before{content:"▤";color:var(--ambar-osc)}
+  .ficha dl{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;font-size:.95rem}
+  .ficha dt{font-weight:700;color:var(--grafito-2)}
+
+  footer{
+    max-width:1000px;margin:0 auto;padding:22px 20px 50px;text-align:center;
+    color:var(--grafito-2);font-size:.85rem;border-top:1px solid var(--linea)
+  }
+  footer .cr{font-family:Cambria,serif;font-style:italic}
+
+  /* Tarjeta de resultado final */
+  .final{
+    display:none;background:var(--grafito);color:var(--mostaza);border-radius:12px;
+    padding:24px;margin-top:8px;text-align:center;box-shadow:var(--sombra)
+  }
+  .final.show{display:block;animation:fade .3s}
+  .final h3{color:var(--ambar);font-size:1.4rem;margin-bottom:6px}
+  .final .big{font-family:Cambria,serif;font-size:2.6rem;font-weight:700;color:#fff}
+  .final p{color:#D9DDE0;margin-top:4px}
+
+  @media(max-width:640px){
+    header.top h1{font-size:1.7rem}
+    .ex{padding:18px 16px}
+    .match{grid-template-columns:1fr}
+    select.msel{min-width:100%}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="eyebrow">Español Médico · Nivel A2 · Clase 8</div>
+    <h1>Enfermedades no transmisibles y casos clínicos</h1>
+    <p class="sub">Cuaderno de ejercicios interactivos. Tres bloques independientes, uno por documento: la lectura sobre las ENT y dos casos clínicos. Cada bloque se corrige y se puntúa por separado.</p>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-inner" role="tablist">
+    <button class="tab-btn active" data-tab="m1" role="tab"><span class="num">Bloque I</span>Enfermedades no transmisibles</button>
+    <button class="tab-btn" data-tab="m2" role="tab"><span class="num">Bloque II</span>Caso clínico · EPOC</button>
+    <button class="tab-btn" data-tab="m3" role="tab"><span class="num">Bloque III</span>Caso clínico · Insuficiencia cardíaca</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ===================== MÓDULO 1 ===================== -->
+  <section class="module active" id="m1">
+    <div class="mod-head">
+      <div class="badge">I</div>
+      <div>
+        <h2>Enfermedades no transmisibles (ENT)</h2>
+        <p>Basado en la lectura de la OMS. Comprensión, vocabulario y gramática.</p>
+      </div>
+    </div>
+    <div class="scorebar">
+      <span class="lbl">Progreso</span>
+      <div class="track"><i data-fill="m1"></i></div>
+      <span class="scoretxt" data-score="m1">0 / 0 aciertos</span>
+      <button class="btn-reset" data-reset="m1">Reiniciar bloque</button>
+    </div>
+    <div class="ex-list" id="list-m1"></div>
+    <div class="final" data-final="m1"></div>
+  </section>
+
+  <!-- ===================== MÓDULO 2 ===================== -->
+  <section class="module" id="m2">
+    <div class="mod-head">
+      <div class="badge">II</div>
+      <div>
+        <h2>Caso clínico 1 · EPOC</h2>
+        <p>Laura Gómez, 70 años. Enfermedad pulmonar obstructiva crónica.</p>
+      </div>
+    </div>
+    <div class="ficha">
+      <h3>Ficha de la paciente</h3>
+      <dl>
+        <dt>Nombre</dt><dd>Laura Gómez</dd>
+        <dt>Edad</dt><dd>70 años · Jubilada</dd>
+        <dt>Antecedentes</dt><dd>EPOC (hace 5 años), tabaquismo, hipertensión</dd>
+        <dt>Motivo</dt><dd>Disnea y tos persistente; los inhaladores no mejoran los síntomas</dd>
+        <dt>IMC</dt><dd>26,6 kg/m² (sobrepeso) · 68 kg · 160 cm</dd>
+        <dt>Espirometría</dt><dd>FEV1/FVC &lt; 70 %</dd>
+      </dl>
+    </div>
+    <div class="scorebar">
+      <span class="lbl">Progreso</span>
+      <div class="track"><i data-fill="m2"></i></div>
+      <span class="scoretxt" data-score="m2">0 / 0 aciertos</span>
+      <button class="btn-reset" data-reset="m2">Reiniciar bloque</button>
+    </div>
+    <div class="ex-list" id="list-m2"></div>
+    <div class="final" data-final="m2"></div>
+  </section>
+
+  <!-- ===================== MÓDULO 3 ===================== -->
+  <section class="module" id="m3">
+    <div class="mod-head">
+      <div class="badge">III</div>
+      <div>
+        <h2>Caso clínico 2 · Insuficiencia cardíaca</h2>
+        <p>Pedro Sánchez, 75 años. Insuficiencia cardíaca con fracción de eyección reducida.</p>
+      </div>
+    </div>
+    <div class="ficha">
+      <h3>Ficha del paciente</h3>
+      <dl>
+        <dt>Nombre</dt><dd>Pedro Sánchez</dd>
+        <dt>Edad</dt><dd>75 años · Contador jubilado</dd>
+        <dt>Antecedentes</dt><dd>Insuficiencia cardíaca (hace 3 años), hipertensión, diabetes tipo 2</dd>
+        <dt>Motivo</dt><dd>Hinchazón en pies y tobillos, disnea de esfuerzo, aumento de peso, cansancio</dd>
+        <dt>IMC</dt><dd>27,8 kg/m² (sobrepeso) · 85 kg · 175 cm</dd>
+        <dt>Ecocardiograma</dt><dd>Fracción de eyección del 35 %</dd>
+      </dl>
+    </div>
+    <div class="scorebar">
+      <span class="lbl">Progreso</span>
+      <div class="track"><i data-fill="m3"></i></div>
+      <span class="scoretxt" data-score="m3">0 / 0 aciertos</span>
+      <button class="btn-reset" data-reset="m3">Reiniciar bloque</button>
+    </div>
+    <div class="ex-list" id="list-m3"></div>
+    <div class="final" data-final="m3"></div>
+  </section>
+
+</main>
+
+<footer>
+  <p class="cr">© Catalina Espinosa</p>
+  <p>Español Médico · Nivel A2 · Clase 8 — Cuaderno de ejercicios</p>
+</footer>
+
+<script>
+/* =====================================================================
+   DATOS — Cada bloque es INDEPENDIENTE (un documento = un módulo)
+   Tipos: choice, multi, tf, fill, bank, match, order, cat, open
+===================================================================== */
+const DATA = {
+  m1: [
+    { type:"tf", q:"Las enfermedades no transmisibles también se conocen como enfermedades <span class='foco'>crónicas</span>.",
+      answer:true,
+      fb:"Correcto. Las ENT son afecciones de larga duración; por eso se llaman «crónicas»." },
+
+    { type:"choice", q:"Según la lectura, ¿qué porcentaje de todas las muertes mundiales causan las ENT?",
+      options:["El 41 %","El 74 %","El 86 %","El 17 %"], answer:1,
+      fb:"Las ENT causan 41 millones de muertes al año, lo que representa el 74 % del total mundial." },
+
+    { type:"choice", q:"¿Cuál es la ENT que causa <span class='foco'>más muertes</span> al año?",
+      options:["El cáncer","La diabetes","Las enfermedades cardiovasculares","Las enfermedades respiratorias crónicas"], answer:2,
+      fb:"Las enfermedades cardiovasculares encabezan la lista con 17,9 millones de muertes anuales." },
+
+    { type:"multi", q:"Seleccionen los <span class='foco'>factores de riesgo</span> de las ENT que menciona la lectura:",
+      options:["Consumo de tabaco","Inactividad física","Vacunación","Consumo nocivo de alcohol","Dieta poco saludable","Contaminación del aire"],
+      answer:[0,1,3,4,5],
+      fb:"La vacunación no es un factor de riesgo. Los demás sí lo son: tabaco, inactividad, alcohol, dieta y contaminación." },
+
+    { type:"match", q:"Emparejen cada ENT con su número aproximado de muertes anuales:",
+      pairs:[
+        {term:"Enfermedades cardiovasculares", right:"17,9 millones"},
+        {term:"Cáncer", right:"9,3 millones"},
+        {term:"Enfermedades respiratorias crónicas", right:"4,1 millones"},
+        {term:"Diabetes", right:"2 millones"}
+      ],
+      fb:"Estas cuatro enfermedades juntas representan más del 80 % de las muertes prematuras por ENT." },
+
+    { type:"fill", q:"Completen con la palabra adecuada:",
+      instr:"Escriban la palabra que falta en cada hueco.",
+      segments:[
+        {text:"Las ENT resultan de factores genéticos, fisiológicos, "},
+        {blank:["ambientales","ambientale"]},
+        {text:" y de comportamiento."}
+      ],
+      fb:"«ambientales». La lectura enumera cuatro tipos de factores." },
+
+    { type:"cat", q:"Clasifiquen cada término como <span class='foco'>factor de riesgo</span> o <span class='foco'>cambio metabólico</span>:",
+      cats:["Factor de riesgo","Cambio metabólico"],
+      tokens:[
+        {t:"Tabaco", c:0},{t:"Hipertensión", c:1},{t:"Inactividad física", c:0},
+        {t:"Hiperglucemia", c:1},{t:"Dieta poco saludable", c:0},{t:"Obesidad", c:1}
+      ],
+      fb:"Los factores de riesgo llevan a cambios metabólicos como hipertensión, hiperglucemia, hiperlipidemia y obesidad." },
+
+    { type:"bank", q:"Completen el texto con las palabras del banco:",
+      words:["urbanización","prevención","primaria","pobreza"],
+      segments:[
+        {text:"Las ENT pueden empujar a las familias hacia la "},
+        {blank:["pobreza"]},
+        {text:". El tratamiento se gestiona con un enfoque de atención "},
+        {blank:["primaria"]},
+        {text:", y la "},
+        {blank:["prevención"]},
+        {text:" es clave frente a la rápida "},
+        {blank:["urbanización"]},
+        {text:"."}
+      ],
+      fb:"pobreza · primaria · prevención · urbanización." },
+
+    { type:"tf", q:"El 86 % de las muertes prematuras por ENT se registran en países de ingreso <span class='foco'>alto</span>.",
+      answer:false,
+      fb:"Falso. Se registran en países de ingreso medio y bajo, no de ingreso alto." },
+
+    { type:"choice", q:"¿Cuál es la meta de los ODS respecto a las ENT para 2030?",
+      options:[
+        "Eliminar por completo las ENT",
+        "Reducir la mortalidad prematura por ENT en un tercio",
+        "Duplicar el gasto sanitario",
+        "Prohibir el tabaco en todo el mundo"
+      ], answer:1,
+      fb:"La meta es reducir en un tercio la mortalidad prematura por ENT para 2030." },
+
+    { type:"fill", q:"Vocabulario médico — completen con el término correcto:",
+      instr:"El nivel alto de azúcar en sangre se llama…",
+      segments:[
+        {text:"El aumento del azúcar en la sangre se denomina "},
+        {blank:["hiperglucemia","hiperglicemia"]},
+        {text:"."}
+      ],
+      fb:"«hiperglucemia»: hiper- (exceso) + glucemia (azúcar en sangre)." },
+
+    { type:"open", q:"Pregunta de aplicación: en su servicio o especialidad, ¿qué medida de prevención de ENT podrían recomendar a sus pacientes? Escriban 2 o 3 frases.",
+      modelo:"Respuesta modelo: «En mi consulta recomiendo a los pacientes dejar de fumar, hacer actividad física moderada y seguir una dieta baja en sal y azúcar. También reviso la tensión arterial y la glucemia de forma periódica.»" }
+  ],
+
+  m2: [
+    { type:"choice", q:"¿Cuál es el <span class='foco'>motivo de consulta</span> de Laura?",
+      options:["Dolor en el pecho","Dificultad para respirar y tos persistente","Hinchazón de las piernas","Fiebre alta"], answer:1,
+      fb:"Laura acude por disnea (dificultad para respirar) y tos persistente que no mejora con los inhaladores." },
+
+    { type:"tf", q:"La espirometría de Laura muestra un cociente FEV1/FVC menor del 70 %, lo que es <span class='foco'>compatible</span> con EPOC.",
+      answer:true,
+      fb:"Correcto. Un FEV1/FVC < 70 % indica obstrucción de la vía aérea, característica de la EPOC." },
+
+    { type:"match", q:"Emparejen cada síntoma o dato con su descripción:",
+      pairs:[
+        {term:"Disnea", right:"Dificultad para respirar"},
+        {term:"Fatiga", right:"Sensación de cansancio"},
+        {term:"Espirometría", right:"Prueba de función pulmonar"},
+        {term:"IMC 26,6", right:"Sobrepeso"}
+      ],
+      fb:"Vocabulario clave del caso: disnea, fatiga, espirometría e índice de masa corporal." },
+
+    { type:"choice", q:"¿Cuál de estos antecedentes de Laura es el principal <span class='foco'>factor de riesgo</span> de la EPOC?",
+      options:["La hipertensión","El tabaquismo","La edad","El sobrepeso"], answer:1,
+      fb:"El tabaquismo es la causa principal de la EPOC. Laura tiene antecedentes de tabaquismo." },
+
+    { type:"cat", q:"Clasifiquen cada elemento como <span class='foco'>síntoma</span> o <span class='foco'>antecedente</span> de Laura:",
+      cats:["Síntoma actual","Antecedente médico"],
+      tokens:[
+        {t:"Tos persistente", c:0},{t:"Tabaquismo", c:1},{t:"Fatiga", c:0},
+        {t:"Hipertensión", c:1},{t:"Problemas para dormir", c:0},{t:"EPOC hace 5 años", c:1}
+      ],
+      fb:"Los síntomas son lo que Laura presenta ahora; los antecedentes, su historia previa." },
+
+    { type:"fill", q:"Completen la recomendación clínica:",
+      instr:"Escriban el verbo en imperativo (usted).",
+      segments:[
+        {text:"Señora Gómez, para respirar mejor, "},
+        {blank:["deje","dejé"]},
+        {text:" de fumar y "},
+        {blank:["use","utilice"]},
+        {text:" el inhalador según la pauta."}
+      ],
+      fb:"«deje» y «use / utilice»: imperativo formal (usted) para dar instrucciones al paciente." },
+
+    { type:"order", q:"Ordenen los pasos lógicos de la <span class='foco'>consulta</span> de Laura:",
+      items:[
+        "Escuchar el motivo de consulta y los síntomas",
+        "Revisar los antecedentes médicos",
+        "Realizar la espirometría",
+        "Ajustar el tratamiento y planificar el seguimiento"
+      ],
+      fb:"Primero se recogen síntomas y antecedentes, luego se hacen las pruebas y por último se ajusta el plan." },
+
+    { type:"bank", q:"Completen el plan de cuidados con las palabras del banco:",
+      words:["inhalador","seguimiento","tabaco","oxígeno"],
+      segments:[
+        {text:"El plan incluye dejar el "},
+        {blank:["tabaco"]},
+        {text:", usar bien el "},
+        {blank:["inhalador"]},
+        {text:", valorar la necesidad de "},
+        {blank:["oxígeno"]},
+        {text:" y programar el "},
+        {blank:["seguimiento"]},
+        {text:"."}
+      ],
+      fb:"tabaco · inhalador · oxígeno · seguimiento." },
+
+    { type:"tf", q:"Como el IMC de Laura es 26,6, su peso está dentro del rango <span class='foco'>normal</span>.",
+      answer:false,
+      fb:"Falso. Un IMC de 26,6 kg/m² se clasifica como sobrepeso, no como peso normal." },
+
+    { type:"multi", q:"¿Qué elementos deberían incluirse en el <span class='foco'>plan de seguimiento</span> de Laura? Seleccionen todos los adecuados.",
+      options:["Revisión de la técnica del inhalador","Programa para dejar de fumar","Control de la tensión arterial","Aumentar el consumo de sal","Actividad física adaptada"],
+      answer:[0,1,2,4],
+      fb:"Aumentar la sal no es adecuado. El resto forma parte de un buen plan de seguimiento." },
+
+    { type:"open", q:"Pregunta de aplicación (del documento): ¿cómo tratarían a Laura si viniera a su consulta y qué necesitaría en su plan de cuidados y seguimiento? Redacten 3-4 frases usando el registro formal (usted).",
+      modelo:"Respuesta modelo: «Señora Gómez, primero revisaría cómo usa el inhalador y le ofrecería ayuda para dejar de fumar. Le recomendaría actividad física suave y controlaría su tensión arterial. Programaría una revisión en un mes para valorar su respiración y ajustar el tratamiento.»" }
+  ],
+
+  m3: [
+    { type:"choice", q:"¿Cuál es el <span class='foco'>motivo de consulta</span> de Pedro?",
+      options:["Tos y fiebre","Hinchazón en pies y tobillos y dificultad para respirar","Dolor de cabeza","Pérdida de peso"], answer:1,
+      fb:"Pedro consulta por edema (hinchazón) en pies y tobillos y disnea al hacer sus actividades cotidianas." },
+
+    { type:"tf", q:"El ecocardiograma de Pedro muestra una fracción de eyección del 35 %, que es <span class='foco'>más baja</span> de lo normal.",
+      answer:true,
+      fb:"Correcto. Una fracción de eyección del 35 % es reducida e indica insuficiencia cardíaca." },
+
+    { type:"match", q:"Emparejen cada término con su significado:",
+      pairs:[
+        {term:"Edema", right:"Hinchazón por acumulación de líquido"},
+        {term:"Ecocardiograma", right:"Ecografía del corazón"},
+        {term:"Fracción de eyección", right:"Porcentaje de sangre que bombea el corazón"},
+        {term:"Disnea de esfuerzo", right:"Falta de aire al hacer actividad"}
+      ],
+      fb:"Vocabulario cardiológico clave del caso." },
+
+    { type:"multi", q:"Seleccionen los <span class='foco'>antecedentes médicos</span> de Pedro:",
+      options:["Insuficiencia cardíaca","Asma","Hipertensión","Diabetes tipo 2","EPOC"],
+      answer:[0,2,3],
+      fb:"Pedro tiene insuficiencia cardíaca, hipertensión y diabetes tipo 2. No consta asma ni EPOC." },
+
+    { type:"cat", q:"Clasifiquen cada signo o síntoma como <span class='foco'>cardíaco/circulatorio</span> o <span class='foco'>general</span>:",
+      cats:["Cardíaco / circulatorio","General"],
+      tokens:[
+        {t:"Hinchazón de tobillos", c:0},{t:"Cansancio", c:1},{t:"Disnea de esfuerzo", c:0},
+        {t:"Aumento de peso", c:1},{t:"Fracción de eyección baja", c:0}
+      ],
+      fb:"El aumento de peso y el cansancio son signos generales que, en este caso, se relacionan con la retención de líquidos." },
+
+    { type:"fill", q:"Completen la recomendación dietética:",
+      instr:"Vocabulario de la insuficiencia cardíaca.",
+      segments:[
+        {text:"Para reducir la retención de líquidos, es importante seguir una dieta baja en "},
+        {blank:["sal","sodio"]},
+        {text:" y controlar el peso a diario."}
+      ],
+      fb:"«sal» (o «sodio»): reducir la sal ayuda a controlar el edema en la insuficiencia cardíaca." },
+
+    { type:"choice", q:"Pedro ha <span class='foco'>ganado peso</span> y se siente cansado. ¿Con qué está relacionado esto en su caso?",
+      options:["Con un aumento de masa muscular","Con la retención de líquidos","Con una dieta rica en proteínas","Con el ejercicio intenso"], answer:1,
+      fb:"En la insuficiencia cardíaca, el aumento rápido de peso suele deberse a la retención de líquidos." },
+
+    { type:"order", q:"Ordenen las frases para formar una <span class='foco'>instrucción</span> correcta al paciente:",
+      items:["Señor Sánchez,","pésese","cada mañana","y anote su peso."],
+      fb:"«Señor Sánchez, pésese cada mañana y anote su peso.» — imperativo formal (usted)." },
+
+    { type:"bank", q:"Completen el plan de cuidados de Pedro con el banco de palabras:",
+      words:["peso","líquidos","medicación","sal"],
+      segments:[
+        {text:"El plan incluye reducir la "},
+        {blank:["sal"]},
+        {text:", limitar los "},
+        {blank:["líquidos"]},
+        {text:", tomar bien la "},
+        {blank:["medicación"]},
+        {text:" y vigilar el "},
+        {blank:["peso"]},
+        {text:" a diario."}
+      ],
+      fb:"sal · líquidos · medicación · peso." },
+
+    { type:"tf", q:"En el caso de Pedro, la <span class='foco'>diabetes tipo 2</span> y la <span class='foco'>hipertensión</span> son factores que agravan su situación cardíaca.",
+      answer:true,
+      fb:"Correcto. Ambas condiciones son comorbilidades que empeoran la insuficiencia cardíaca." },
+
+    { type:"open", q:"Pregunta de aplicación (del documento): ¿cómo tratarían a Pedro si viniera a su consulta y qué necesitaría en su plan de cuidados y seguimiento? Redacten 3-4 frases en registro formal (usted).",
+      modelo:"Respuesta modelo: «Señor Sánchez, revisaría su medicación y le pediría que se pese cada mañana. Le recomendaría una dieta baja en sal y limitar los líquidos. Controlaría su tensión y su glucemia por la diabetes, y programaría una revisión pronto para vigilar la hinchazón y su respiración.»" }
+  ]
+};
+
+/* =====================================================================
+   MOTOR — renderizado + corrección independiente por módulo
+===================================================================== */
+const shuffle = a => a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+const norm = s => s.toLowerCase().trim().replace(/[.,;:]/g,"").replace(/\s+/g," ");
+const state = { m1:{}, m2:{}, m3:{} }; // resultados por ejercicio
+
+function buildAll(){
+  for(const mod of ["m1","m2","m3"]){
+    const list = document.getElementById("list-"+mod);
+    list.innerHTML = "";
+    DATA[mod].forEach((ex,i)=> list.appendChild(buildEx(mod,i,ex)));
+    updateScore(mod);
+  }
+}
+
+function typeLabel(t){
+  return {choice:"Opción única",multi:"Selección múltiple",tf:"Verdadero / Falso",
+    fill:"Rellenar huecos",bank:"Banco de palabras",match:"Emparejar",
+    order:"Ordenar",cat:"Clasificar",open:"Respuesta abierta"}[t]||t;
+}
+
+function buildEx(mod,i,ex){
+  const card = document.createElement("div");
+  card.className = "ex";
+  card.dataset.mod = mod; card.dataset.idx = i;
+  card.innerHTML = `
+    <div class="ex-head">
+      <span class="ex-num">${i+1}.</span>
+      <span class="ex-type">${typeLabel(ex.type)}</span>
+    </div>
+    <div class="ex-q">${ex.q}</div>
+    ${ex.instr?`<div class="instr">${ex.instr}</div>`:""}
+    <div class="body"></div>
+    <div class="ex-foot"></div>
+    <div class="fb"></div>`;
+  const body = card.querySelector(".body");
+  const foot = card.querySelector(".ex-foot");
+  renderBody[ex.type](body,ex,mod,i);
+
+  if(ex.type!=="open"){
+    const btn = document.createElement("button");
+    btn.className="btn-check"; btn.textContent="Comprobar";
+    btn.onclick = ()=> check(card,ex,mod,i,btn);
+    foot.appendChild(btn);
+  } else {
+    const btn = document.createElement("button");
+    btn.className="btn-ghost"; btn.textContent="Ver respuesta modelo";
+    btn.onclick = ()=>{
+      const fb = card.querySelector(".fb");
+      fb.className="fb show info";
+      fb.innerHTML = `<div class="modelo"><b>Sugerencia:</b> ${ex.modelo}</div>`;
+      markDone(mod,i,null); // abierta: cuenta como completada, sin acierto/fallo
+    };
+    foot.appendChild(btn);
+  }
+  return card;
+}
+
+/* ---------- Renderizadores por tipo ---------- */
+const renderBody = {
+  choice(body,ex){
+    const wrap=document.createElement("div"); wrap.className="opts";
+    ex.options.forEach((o,k)=>{
+      const l=document.createElement("label"); l.className="opt";
+      l.innerHTML=`<input type="radio" name="${uid()}" value="${k}"><span>${o}</span><span class="mark"></span>`;
+      wrap.appendChild(l);
+    });
+    // nombre único de grupo
+    const nm=uid(); wrap.querySelectorAll("input").forEach(inp=>inp.name=nm);
+    body.appendChild(wrap);
+  },
+  multi(body,ex){
+    const wrap=document.createElement("div"); wrap.className="opts";
+    ex.options.forEach((o,k)=>{
+      const l=document.createElement("label"); l.className="opt";
+      l.innerHTML=`<input type="checkbox" value="${k}"><span>${o}</span><span class="mark"></span>`;
+      wrap.appendChild(l);
+    });
+    body.appendChild(wrap);
+  },
+  tf(body){
+    const wrap=document.createElement("div"); wrap.className="opts";
+    const nm=uid();
+    [["true","Verdadero"],["false","Falso"]].forEach(([v,t])=>{
+      const l=document.createElement("label"); l.className="opt";
+      l.innerHTML=`<input type="radio" name="${nm}" value="${v}"><span>${t}</span><span class="mark"></span>`;
+      wrap.appendChild(l);
+    });
+    body.appendChild(wrap);
+  },
+  fill(body,ex){ body.appendChild(segLine(ex.segments)); },
+  bank(body,ex){
+    const bank=document.createElement("div"); bank.className="bank";
+    shuffle(ex.words.slice()).forEach(w=>{
+      const c=document.createElement("span"); c.className="chip"; c.textContent=w; bank.appendChild(c);
+    });
+    body.appendChild(bank);
+    body.appendChild(segLine(ex.segments));
+  },
+  match(body,ex){
+    const grid=document.createElement("div"); grid.className="match";
+    const rights=shuffle(ex.pairs.map(p=>p.right));
+    ex.pairs.forEach(p=>{
+      const t=document.createElement("div"); t.className="term"; t.textContent=p.term;
+      const sel=document.createElement("select"); sel.className="msel";
+      sel.innerHTML=`<option value="">— elegir —</option>`+rights.map(r=>`<option>${r}</option>`).join("");
+      grid.appendChild(t); grid.appendChild(sel);
+    });
+    body.appendChild(grid);
+  },
+  order(body,ex){
+    const box=document.createElement("div"); box.className="order";
+    shuffle(ex.items.map((t,i)=>({t,i}))).forEach(o=>{
+      const d=document.createElement("div"); d.className="order-item"; d.draggable=true;
+      d.dataset.correct=o.i;
+      d.innerHTML=`<span class="grip">⋮⋮</span><span>${o.t}</span>`;
+      box.appendChild(d);
+    });
+    enableDragSort(box);
+    body.appendChild(box);
+  },
+  cat(body,ex){
+    const pool=document.createElement("div"); pool.className="token-pool";
+    shuffle(ex.tokens.slice()).forEach(tk=>{
+      const el=document.createElement("div"); el.className="token"; el.draggable=true;
+      el.textContent=tk.t; el.dataset.cat=tk.c;
+      pool.appendChild(el);
+    });
+    const cats=document.createElement("div"); cats.className="cats";
+    ex.cats.forEach((name,ci)=>{
+      const col=document.createElement("div"); col.className="cat-col"; col.dataset.col=ci;
+      col.innerHTML=`<h4>${name}</h4>`;
+      cats.appendChild(col);
+    });
+    body.appendChild(pool); body.appendChild(cats);
+    enableCatDrag(body);
+  },
+  open(body){ const ta=document.createElement("textarea"); ta.className="open"; ta.placeholder="Escriban su respuesta aquí…"; body.appendChild(ta); }
+};
+
+function segLine(segments){
+  const line=document.createElement("div"); line.className="txtline";
+  segments.forEach(s=>{
+    if(s.text){ const sp=document.createElement("span"); sp.textContent=s.text; line.appendChild(sp); }
+    else{ const inp=document.createElement("input"); inp.className="blank"; inp.type="text";
+      inp.dataset.answers=JSON.stringify(s.blank); line.appendChild(inp); }
+  });
+  return line;
+}
+
+let _id=0; const uid=()=> "g"+(++_id);
+
+/* ---------- Corrección ---------- */
+function check(card,ex,mod,i,btn){
+  let ok=false;
+  if(ex.type==="choice"||ex.type==="tf"){
+    const chosen=card.querySelector("input:checked");
+    const opts=card.querySelectorAll(".opt");
+    opts.forEach(o=>o.classList.add("locked"));
+    if(!chosen){ flash(card,"info","Elijan una opción antes de comprobar."); return; }
+    let correctVal = ex.type==="tf" ? String(ex.answer) : String(ex.answer);
+    opts.forEach(o=>{
+      const inp=o.querySelector("input");
+      if(inp.value===correctVal){ o.classList.add("correct"); o.querySelector(".mark").textContent="✓"; }
+      if(inp.checked && inp.value!==correctVal){ o.classList.add("wrong"); o.querySelector(".mark").textContent="✗"; }
+    });
+    ok = chosen.value===correctVal;
+  }
+  else if(ex.type==="multi"){
+    const opts=[...card.querySelectorAll(".opt")];
+    const picked=opts.filter(o=>o.querySelector("input").checked).map(o=>+o.querySelector("input").value);
+    if(picked.length===0){ flash(card,"info","Seleccionen al menos una opción."); return; }
+    opts.forEach(o=>{
+      const v=+o.querySelector("input").value; const inp=o.querySelector("input");
+      if(ex.answer.includes(v)){ o.classList.add("correct"); o.querySelector(".mark").textContent="✓"; }
+      else if(inp.checked){ o.classList.add("wrong"); o.querySelector(".mark").textContent="✗"; }
+      o.classList.add("locked");
+    });
+    ok = picked.length===ex.answer.length && picked.every(v=>ex.answer.includes(v));
+  }
+  else if(ex.type==="fill"||ex.type==="bank"){
+    const inputs=[...card.querySelectorAll("input.blank")];
+    ok=true;
+    inputs.forEach(inp=>{
+      const ans=JSON.parse(inp.dataset.answers).map(norm);
+      const good=ans.includes(norm(inp.value));
+      inp.classList.toggle("ok",good); inp.classList.toggle("no",!good);
+      inp.disabled=true; if(!good) ok=false;
+    });
+  }
+  else if(ex.type==="match"){
+    const sels=[...card.querySelectorAll("select.msel")];
+    ok=true;
+    sels.forEach((sel,k)=>{
+      const good=sel.value===ex.pairs[k].right;
+      sel.classList.toggle("ok",good); sel.classList.toggle("no",!good);
+      sel.disabled=true; if(!good) ok=false;
+    });
+  }
+  else if(ex.type==="order"){
+    const items=[...card.querySelectorAll(".order-item")];
+    ok=true;
+    items.forEach((it,pos)=>{
+      const good=+it.dataset.correct===pos;
+      it.classList.toggle("ok",good); it.classList.toggle("no",!good);
+      it.draggable=false; it.style.cursor="default"; if(!good) ok=false;
+    });
+  }
+  else if(ex.type==="cat"){
+    const tokens=[...card.querySelectorAll(".token")];
+    ok=true;
+    tokens.forEach(tk=>{
+      const col=tk.closest(".cat-col");
+      const good = col && +col.dataset.col===+tk.dataset.cat;
+      tk.classList.toggle("ok",good); tk.classList.toggle("no",!good);
+      tk.draggable=false; if(!good) ok=false;
+    });
+  }
+
+  btn.disabled=true;
+  flash(card, ok?"good":"bad", (ok?"<strong>¡Correcto!</strong> ":"<strong>Revisen la respuesta.</strong> ")+(ex.fb||""));
+  markDone(mod,i,ok);
+}
+
+function flash(card,kind,html){
+  const fb=card.querySelector(".fb");
+  fb.className="fb show "+kind; fb.innerHTML=html;
+}
+
+function markDone(mod,i,ok){ state[mod][i]=ok; updateScore(mod); }
+
+function updateScore(mod){
+  const total=DATA[mod].length;
+  const scored=DATA[mod].filter(e=>e.type!=="open").length;
+  const done=Object.keys(state[mod]).length;
+  const correct=Object.values(state[mod]).filter(v=>v===true).length;
+  const fill=document.querySelector(`[data-fill="${mod}"]`);
+  const txt=document.querySelector(`[data-score="${mod}"]`);
+  fill.style.width = Math.round(done/total*100)+"%";
+  txt.textContent = `${correct} / ${scored} aciertos · ${done}/${total} completados`;
+  // resultado final cuando todo está completado
+  if(done===total){
+    const box=document.querySelector(`[data-final="${mod}"]`);
+    const pct=Math.round(correct/scored*100);
+    let msg = pct>=80?"¡Excelente trabajo!":pct>=60?"Buen resultado, sigan repasando.":"Repasen el documento y vuelvan a intentarlo.";
+    box.className="final show";
+    box.innerHTML=`<h3>Bloque completado</h3><div class="big">${correct} / ${scored}</div><p>${pct}% de aciertos en los ejercicios corregibles. ${msg}</p>`;
+  }
+}
+
+/* ---------- Drag & drop: ordenar ---------- */
+function enableDragSort(box){
+  let dragged=null;
+  box.addEventListener("dragstart",e=>{ dragged=e.target.closest(".order-item"); dragged.classList.add("dragging"); });
+  box.addEventListener("dragend",()=>{ if(dragged)dragged.classList.remove("dragging"); dragged=null; });
+  box.addEventListener("dragover",e=>{
+    e.preventDefault();
+    const after=[...box.querySelectorAll(".order-item:not(.dragging)")].reduce((closest,child)=>{
+      const b=child.getBoundingClientRect(); const off=e.clientY-b.top-b.height/2;
+      return off<0&&off>closest.offset?{offset:off,el:child}:closest;
+    },{offset:-Infinity}).el;
+    if(!dragged)return;
+    if(after==null) box.appendChild(dragged); else box.insertBefore(dragged,after);
+  });
+}
+
+/* ---------- Drag & drop: clasificar ---------- */
+function enableCatDrag(body){
+  let dragged=null;
+  body.querySelectorAll(".token").forEach(t=>{
+    t.addEventListener("dragstart",e=>{ dragged=t; setTimeout(()=>t.style.opacity=".4",0); });
+    t.addEventListener("dragend",()=>{ t.style.opacity="1"; dragged=null; });
+  });
+  const targets=[...body.querySelectorAll(".cat-col"), body.querySelector(".token-pool")];
+  targets.forEach(col=>{
+    col.addEventListener("dragover",e=>{ e.preventDefault(); col.classList.add("over"); });
+    col.addEventListener("dragleave",()=>col.classList.remove("over"));
+    col.addEventListener("drop",e=>{ e.preventDefault(); col.classList.remove("over"); if(dragged)col.appendChild(dragged); });
+  });
+}
+
+/* ---------- Pestañas ---------- */
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".module").forEach(m=>m.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+});
+
+/* ---------- Reiniciar bloque ---------- */
+document.querySelectorAll(".btn-reset").forEach(b=>{
+  b.onclick=()=>{ const mod=b.dataset.reset; state[mod]={};
+    document.querySelector(`[data-final="${mod}"]`).className="final";
+    const list=document.getElementById("list-"+mod); list.innerHTML="";
+    DATA[mod].forEach((ex,i)=> list.appendChild(buildEx(mod,i,ex)));
+    updateScore(mod);
+  };
+});
+
+buildAll();
+</script>
+</body>
+</html>
